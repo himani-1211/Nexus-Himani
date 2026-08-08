@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NEXUS Operator Dashboard"
+    >
+
+    <title>NEXUS · Operator Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================================================
+         TOP BAR
+    ========================================================== -->
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="logo">
+                N
+            </div>
+
+            <div>
+                <h1>NEXUS</h1>
+
+                <p>
+                    Operator Dashboard
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="topbar-right">
+
+            <span
+                class="last-refresh"
+                id="last-refresh"
+            >
+                Updated —
+            </span>
+
+
+            <div
+                class="system-status"
+                id="system-status"
+            >
+
+                <span class="status-dot"></span>
+
+                <span id="system-status-text">
+                    System Operational
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         MAIN DASHBOARD
+    ========================================================== -->
+
+    <main class="dashboard">
+
+
+        <!-- =====================================================
+             INCIDENT / PLATFORM SUMMARY
+        ====================================================== -->
+
+        <section
+            class="alert-card"
+            id="alert-card"
+        >
+
+            <div
+                class="alert-icon"
+                id="alert-icon"
+            >
+                ✓
+            </div>
+
+
+            <div class="alert-copy">
+
+                <h2 id="alert-title">
+                    No active incidents
+                </h2>
+
+                <p id="alert-message">
+                    NEXUS is currently processing work normally.
+                </p>
+
+            </div>
+
+
+            <span
+                class="alert-state"
+                id="alert-state"
+            >
+                HEALTHY
+            </span>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             OPERATOR ACTIONS
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Operator Actions
+                    </h2>
+
+                    <span>
+                        Control and inspect the platform
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="action-grid">
+
+
+                <!-- CREATE JOB -->
+
+                <button
+                    class="action-card primary"
+                    data-action="create-job"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        +
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Create Job
+                        </strong>
+
+                        <small>
+                            Submit new work
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- JOB STATUS -->
+
+                <button
+                    class="action-card"
+                    data-action="job-status"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ⌕
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Job Status
+                        </strong>
+
+                        <small>
+                            Inspect a job
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- JOB HISTORY -->
+
+                <button
+                    class="action-card"
+                    data-action="job-history"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ≡
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Job History
+                        </strong>
+
+                        <small>
+                            Reconstruct events
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- PROCESS NEXT -->
+
+                <button
+                    class="action-card"
+                    data-action="process-next"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ▶
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Process Next
+                        </strong>
+
+                        <small>
+                            Run queued work
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- RETRY JOB -->
+
+                <button
+                    class="action-card warning"
+                    data-action="retry-job"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ↻
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Retry Job
+                        </strong>
+
+                        <small>
+                            Return retrying work
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- TRIGGER FAILURE -->
+
+                <button
+                    class="action-card danger"
+                    data-action="trigger-failure"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        !
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Trigger Failure
+                        </strong>
+
+                        <small>
+                            Break it on purpose
+                        </small>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WORK OVERVIEW
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Work Overview
+                    </h2>
+
+                    <span>
+                        Current platform state
+                    </span>
+
+                </div>
+
+
+                <span class="live-label">
+
+                    <i></i>
+
+                    Live
+
+                </span>
+
+            </div>
+
+
+
+            <div class="stats-grid">
+
+
+                <!-- WAITING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <p>
+                            Waiting
+                        </p>
+
+                        <span>
+                            QUEUE
+                        </span>
+
+                    </div>
+
+
+                    <h3 id="waiting-count">
+                        0
+                    </h3>
+
+
+                    <div
+                        class="stat-foot"
+                        id="waiting-foot"
+                    >
+                        Pending work
+                    </div>
+
+                </div>
+
+
+
+                <!-- PROCESSING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <p>
+                            Processing
+                        </p>
+
+                        <span>
+                            ACTIVE
+                        </span>
+
+                    </div>
+
+
+                    <h3 id="processing-count">
+                        0
+                    </h3>
+
+
+                    <div class="stat-foot">
+                        Currently running
+                    </div>
+
+                </div>
+
+
+
+                <!-- COMPLETED -->
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <p>
+                            Completed
+                        </p>
+
+                        <span>
+                            DONE
+                        </span>
+
+                    </div>
+
+
+                    <h3 id="completed-count">
+                        0
+                    </h3>
+
+
+                    <div class="stat-foot">
+                        Successfully finished
+                    </div>
+
+                </div>
+
+
+
+                <!-- RETRYING -->
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <p>
+                            Retrying
+                        </p>
+
+                        <span>
+                            RECOVERY
+                        </span>
+
+                    </div>
+
+
+                    <h3 id="retrying-count">
+                        0
+                    </h3>
+
+
+                    <div class="stat-foot">
+                        Awaiting another attempt
+                    </div>
+
+                </div>
+
+
+
+                <!-- DEAD LETTER -->
+
+                <div class="stat-card danger">
+
+                    <div class="stat-top">
+
+                        <p>
+                            Dead Letter
+                        </p>
+
+                        <span>
+                            ATTENTION
+                        </span>
+
+                    </div>
+
+
+                    <h3 id="dead-letter-count">
+                        0
+                    </h3>
+
+
+                    <div class="stat-foot">
+                        Needs operator attention
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             WORKER + QUEUE
+        ====================================================== -->
+
+        <section class="two-column">
+
+
+            <!-- =================================================
+                 WORKER
+            ================================================== -->
+
+            <div>
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Worker
+                        </h2>
+
+                        <span>
+                            Current component state
+                        </span>
+
+                    </div>
+
+
+                    <span
+                        class="component-badge"
+                        id="worker-badge"
+                    >
+                        RUNNING
+                    </span>
+
+                </div>
+
+
+
+                <div class="worker-card">
+
+
+                    <div class="worker-main">
+
+
+                        <!-- WORKER STATUS -->
+
+                        <div class="worker-status">
+
+                            <span
+                                class="status-dot"
+                                id="worker-dot"
+                            ></span>
+
+
+                            <div>
+
+                                <h3 id="worker-status">
+                                    Running
+                                </h3>
+
+                                <p>
+                                    NEXUS worker
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- WORKER INFORMATION -->
+
+                        <div class="worker-info">
+
+
+                            <div>
+
+                                <span>
+                                    Current Job
+                                </span>
+
+                                <strong id="current-job">
+                                    None
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Attempts
+                                </span>
+
+                                <strong id="worker-attempts">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- WORKER CONTROLS -->
+
+                    <div class="worker-controls">
+
+
+                        <button
+                            class="small-btn"
+                            data-action="restart-worker"
+                            type="button"
+                        >
+                            Restart
+                        </button>
+
+
+                        <button
+                            class="small-btn"
+                            data-action="worker-slow"
+                            type="button"
+                        >
+                            Slow Mode
+                        </button>
+
+
+                        <button
+                            class="small-btn danger-outline"
+                            data-action="worker-crash"
+                            type="button"
+                        >
+                            Crash Once
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 QUEUE HEALTH
+            ================================================== -->
+
+            <div>
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Queue Health
+                        </h2>
+
+                        <span>
+                            Oldest accepted work
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="queue-card">
+
+
+                    <div class="queue-item">
+
+                        <span>
+                            Oldest waiting job
+                        </span>
+
+                        <strong id="oldest-job">
+                            None
+                        </strong>
+
+                    </div>
+
+
+                    <div class="queue-item">
+
+                        <span>
+                            Waiting since
+                        </span>
+
+                        <strong id="waiting-since">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RECENT ACTIVITY
+        ====================================================== -->
+
+        <section>
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        Recent Activity
+                    </h2>
+
+                    <span>
+                        Latest platform events
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="refresh-btn"
+                    id="refresh-btn"
+                    type="button"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+
+            <div class="activity-card">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Job ID
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Attempts
+                                </th>
+
+                                <th>
+                                    Time
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="activity-table">
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    class="empty-cell"
+                                >
+                                    No activity yet
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================================
+         ACTION MODAL
+    ========================================================== -->
+
+    <div
+        class="modal-backdrop hidden"
+        id="modal-backdrop"
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+
+
+            <!-- CLOSE -->
+
+            <button
+                class="modal-close"
+                id="modal-close"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <span
+                    class="modal-kicker"
+                    id="modal-kicker"
+                >
+                    OPERATOR
+                </span>
+
+
+                <h2 id="modal-title">
+                    Action
+                </h2>
+
+
+                <p id="modal-description">
+                    Choose an action.
+                </p>
+
+            </div>
+
+
+
+            <!-- ACTION FORM -->
+
+            <form id="action-form">
+
+                <div id="modal-fields">
+                    <!-- Dynamic fields inserted by app.js -->
+                </div>
+
+
+                <div class="modal-actions">
+
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        id="modal-cancel"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="modal-submit"
+                    >
+                        Continue
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         TOAST NOTIFICATION
+    ========================================================== -->
+
+    <div
+        class="toast hidden"
+        id="toast"
+    >
+
+        <span id="toast-icon">
+            ✓
+        </span>
+
+
+        <div>
+
+            <strong id="toast-title">
+                Done
+            </strong>
+
+            <p id="toast-message"></p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
